@@ -7,7 +7,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
     # Предположим, что video_stream - это ваш видеопоток
     while True:
+
         ret, video_stream = capture.read()
-        s.sendall(video_stream)
+        data = cv2.imencode('.jpg', video_stream)[1].tostring()
+        s.sendall(data)
 
 capture.release()
